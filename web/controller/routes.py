@@ -46,3 +46,8 @@ def get_reservations_by_establishment(establishment_id: str):
 @controller.get(base_url + "/status/{status}")
 def get_reservations_by_status(status: Status):
     return service.get_by_status(status)
+
+
+@controller.get(base_url + "/health")
+def health_check():
+    return {"status": "ok"}
