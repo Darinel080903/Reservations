@@ -9,4 +9,5 @@ class Reservation_request(BaseModel):
     service: str
     date: str
     hour: str
+    detail: str
     status: Status

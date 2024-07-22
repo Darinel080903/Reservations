@@ -10,4 +10,5 @@ class Reservation_entity(BaseModel):
     service: str
     date: str
     hour: str
+    detail: str
     status: Status

@@ -35,6 +35,7 @@ class Mapper_reservation:
             service=reservation.service,
             date=reservation.date,
             hour=reservation.hour,
+            detail=reservation.detail,
             status=reservation.status
         )
 

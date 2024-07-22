@@ -1,11 +1,16 @@
 from abc import ABC
 
+from persistance.models.enum.status import Status
 from persistance.repositories.reservation_repository import Reservation_repository
 from services.abstract.reservation_abstract import Reservation_service
 from web.dto.response.base_response import Base_response
 import requests
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime, timedelta
 from datetime import datetime
 
+scheduler = BackgroundScheduler()
+scheduler.start()
 
 def convert_time_to_numbers(time_str):
     time_obj = datetime.strptime(time_str, "%H:%M:%S")
@@ -15,6 +20,12 @@ def convert_time_to_numbers(time_str):
 class Reservation_impl(Reservation_service, ABC):
     def __init__(self, reservation_repository: Reservation_repository):
         self.reservation_repository = reservation_repository
+
+    @staticmethod
+    def set_reservation_inactive(self, reservation_id):
+        reservation = self.reservation_repository.get_by_id(reservation_id)
+        reservation.status = Status.INACTIVE
+        self.reservation_repository.update_reservation(reservation, reservation_id)
 
     def get_all(self) -> Base_response:
         try:
@@ -43,6 +54,8 @@ class Reservation_impl(Reservation_service, ABC):
             hour = convert_time_to_numbers(reservation.hour)
             if open < hour < close:
                 reservation = self.reservation_repository.add_reservation(reservation)
+                run_date = datetime.now() + timedelta(hours=1)
+                scheduler.add_job(self.set_reservation_inactive, 'date', run_date=run_date, args=[reservation.id])
                 return Base_response(data=reservation, message="Success", code=201)
             return Base_response(data=None, message="Hour not available", code=400)
         except Exception as e:
