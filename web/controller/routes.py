@@ -48,6 +48,11 @@ def get_reservations_by_status(status: Status):
     return service.get_by_status(status)
 
 
+@controller.delete(base_url + "/delete/{reservation_id}")
+def delete_by_id(reservation_id: int):
+    return service.delete_reservation(reservation_id)
+
+
 @controller.get(base_url + "/health")
 def health_check():
     return {"status": "ok"}
