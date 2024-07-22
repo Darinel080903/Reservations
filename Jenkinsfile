@@ -32,10 +32,10 @@ pipeline{
                     dockerImage.run("-e AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID} \
                         -e AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY} \
                         -e AWS_REGION=${env.AWS_REGION} \
-                        -e URR=${env.URR} \
-                        -e USS=${env.USS} \
-                        -e PSS=${env.PSS} \
-                        -p 8000:8000 --name ${CONTAINER_NAME}")
+                        -e URR1=${env.URR1} \
+                        -e USS1=${env.USS1} \
+                        -e PSS1=${env.PSS1} \
+                        -p 8001:8001 --name ${CONTAINER_NAME}")
                 }
             }
         }
