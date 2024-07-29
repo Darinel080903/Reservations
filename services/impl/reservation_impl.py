@@ -54,8 +54,6 @@ class Reservation_impl(Reservation_service, ABC):
             hour = convert_time_to_numbers(reservation.hour)
             if open < hour < close:
                 reservation = self.reservation_repository.add_reservation(reservation)
-                run_date = datetime.now() + timedelta(hours=1)
-                scheduler.add_job(self.set_reservation_inactive, 'date', run_date=run_date, args=[reservation.id])
                 return Base_response(data=reservation, message="Success", code=201)
             return Base_response(data=None, message="Hour not available", code=400)
         except Exception as e:

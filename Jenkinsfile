@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment {
         DOCKER_IMAGE = 'service-coso'
-        PORT_MAPPING = '8000:8000'
+        PORT_MAPPING = '8001:8001'
         CONTAINER_NAME = 'service-coso-container'
         AWS_REGION = 'us-east-1'
         AWS_ACCESS_KEY_ID = "${env.AWS_ACCESS_KEY_ID}"
